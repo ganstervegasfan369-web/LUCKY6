@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>LION KING LUCKY NUMBERS</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+@keyframes goldMove {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 200% 50%; }
+}
+
+body {
+  margin: 0;
+  font-family: 'Segoe UI', sans-serif;
+  background: radial-gradient(circle at top, #111, #000);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  color: #fff;
+}
+
+.wrapper { width: 390px; }
+
+.frame {
+  padding: 22px;
+  border-radius: 26px;
+  background:
+    linear-gradient(#111, #111) padding-box,
+    linear-gradient(120deg, #ffd700, #ffae00, #ffd700) border-box;
+  background-size: 300% 300%;
+  border: 3px solid transparent;
+  animation: goldMove 5s linear infinite;
+  box-shadow: 0 0 40px rgba(255,215,0,0.45),
+              inset 0 0 20px rgba(255,215,0,0.15);
+}
+
+.title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: gold;
+  margin-bottom: 10px;
+}
+
+.time-display {
+  text-align: center;
+  font-size: 18px;
+  font-weight: bold;
+  color: #ffd700;
+  margin-bottom: 18px;
+}
+
+.section { margin-bottom: 16px; }
+
+.section-title {
+  font-size: 14px;
+  color: #ffd700;
+  margin-bottom: 6px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 8px;
+}
+
+.num {
+  background: linear-gradient(145deg, #111, #1f1f1f);
+  border: 1px solid gold;
+  border-radius: 10px;
+  padding: 10px 0;
+  font-size: 16px;
+  font-weight: bold;
+  color: gold;
+  text-align: center;
+}
+
+.controls {
+  margin-top: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+input {
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  border: 1px solid gold;
+  background: #111;
+  color: gold;
+  font-weight: bold;
+  text-align: center;
+}
+
+button {
+  flex: 1;
+  padding: 12px;
+  border-radius: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+}
+
+.generate {
+  background: linear-gradient(145deg, #ffd700, #c99700);
+  color: #000;
+}
+
+.copy {
+  margin-top: 10px;
+  width: 100%;
+  background: #111;
+  color: gold;
+  border: 1px solid gold;
+}
+</style>
+</head>
+
+<body>
+
+<div class="wrapper">
+
+  <div class="frame">
+    <div class="title">🦁 LION KING LUCKY NUMBERS 🦁</div>
+    <div class="time-display" id="timeText">12 PM</div>
+    <div id="numbers"></div>
+  </div>
+
+  <div class="controls">
+    <input type="text" id="timeInput" placeholder="Edit Time (ex: 3 PM)">
+    <button class="generate" onclick="generate()">GENERATE</button>
+  </div>
+
+  <button class="copy" onclick="copyAll()">COPY</button>
+
+</div>
+
+<script>
+function rand(d) {
+  let min = Math.pow(10, d - 1);
+  let max = Math.pow(10, d) - 1;
+  return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+function section(d, label) {
+  let html = `<div class="section">
+    <div class="section-title">${label}</div>
+    <div class="grid">`;
+  for (let i = 0; i < 5; i++) {
+    html += `<div class="num">${rand(d)}</div>`;
+  }
+  html += `</div></div>`;
+  return html;
+}
+
+function generate() {
+  const input = document.getElementById("timeInput").value;
+  if (input.trim() !== "") {
+    document.getElementById("timeText").textContent = input.toUpperCase();
+  }
+
+  let c = document.getElementById("numbers");
+  c.innerHTML = "";
+  c.innerHTML += section(1, "1 DIGITS LUCKY NUMBERS ALL");
+  c.innerHTML += section(2, "2 DIGITS LUCKY NUMBERS ALL");
+  c.innerHTML += section(3, "3 DIGITS LUCKY NUMBERS BOX");
+  c.innerHTML += section(4, "4 DIGITS LUCKY NUMBERS BOX");
+  c.innerHTML += section(5, "5 DIGITS LUCKY NUMBERS BOX");
+}
+
+function copyAll() {
+  let time = document.getElementById("timeText").textContent;
+  let nums = [...document.querySelectorAll(".num")]
+    .map(n => n.textContent).join("  ");
+  navigator.clipboard.writeText(
+    "LION KING LUCKY NUMBERS\n" + time + "\n" + nums
+  );
+  alert("Copied successfully!");
+}
+
+generate();
+</script>
+
+</body>
+</html>
